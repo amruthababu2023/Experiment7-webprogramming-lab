@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+
+    <style>
+        body {
+            background-color: lightblue;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        .container {
+            background-color: white;
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        li {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>To-Do List</h2>
+
+        <input type="text" id="task" placeholder="Enter task">
+
+        <button onclick="addTask()">Add</button>
+
+        <ul id="list"></ul>
+
+    </div>
+
+    <script>
+
+        let tasks = [];
+
+        // Add task
+        function addTask() {
+            let task = document.getElementById("task").value;
+
+            if (task == "") {
+                alert("Enter a task");
+                return;
+            }
+
+            tasks.push(task);
+
+            document.getElementById("task").value = "";
+
+            displayTasks();
+        }
+
+        // Display tasks
+        function displayTasks() {
+            let list = document.getElementById("list");
+
+            list.innerHTML = "";
+
+            for (let i = 0; i < tasks.length; i++) {
+
+                let li = document.createElement("li");
+
+                li.innerHTML = tasks[i];
+
+                // Complete task
+                li.onclick = function() {
+                    li.style.textDecoration = "line-through";
+                };
+
+                // Delete task
+                let btn = document.createElement("button");
+
+                btn.innerHTML = "Delete";
+
+                btn.onclick = function(event) {
+                    event.stopPropagation();
+                    tasks.splice(i, 1);
+                    displayTasks();
+                };
+
+                li.appendChild(btn);
+
+                list.appendChild(li);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
